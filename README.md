@@ -132,3 +132,4 @@ First step type mo tong command na to:
  - **Windows** :  http://nginx.org/en/docs/windows.html
  - **Ubuntu :**  https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04 (Halos kumpleto na rin dito, pati deployment haha)
  - **Deployment Guide EC2** : https://docs.nginx.com/nginx/deployment-guides/amazon-web-services/ec2-instances-for-nginx/
+ - **Deployment Guide with Domain Mapping** : https://hackernoon.com/how-to-run-multiple-apps-on-a-single-ec2-instance-with-nginx-and-map-your-custom-domain-2640630ce1e7
