@@ -91,32 +91,33 @@ First step type mo tong command na to:
  - **/var/www/html** : Nandito yung nakita natin kanina na default site ni nginx.
 ## Deployment (Static Website)
 1. Copy mo muna yung static content mo papunta sa server. Maraming ways gawin to tulad ng SCP o kaya pag Git clone ng project mo papunta sa server.
-2. Punta ka sa **/etc/nginx/sites-available** sa server mo, tapos type mo to: 
+2. Enable NGINX to have read access sa content / app mo: sudo chmod 755 /home/user/Dropbox/subdir1
+3. Punta ka sa **/etc/nginx/sites-available** sa server mo, tapos type mo to: 
 	> sudo vim [sitename]; ***Example : sudo vim portfoliosite***
 	
 	Tapos niyan may lalabas na code editor i-paste mo tong nginx config 		file na to:
 
 ```
   server {
-        listen       1069;
-        server_name  localhost [Wala pa tayong domain name ganito muna];
+        listen       80;
+        server_name  testinglang.tk www.testinglangmuna.tk;
     location / {
-            root   /var/www/demo [Location ng static content mo sa server mo];
+            root   /home/ubuntu/app/sample-site;
             index  index.html index.htm [Root file na i-seserve ni NGINX];
 			try_files $uri $uri/ =404;
         }
 ```
 
-3. Pag nagawa mo na yung file sa taas, gawa ka ng link papunta sa sites-available to sites-enabled. Gamitin mo tong command sample: 
+4. Pag nagawa mo na yung file sa taas, gawa ka ng link papunta sa sites-available to sites-enabled. Gamitin mo tong command sample: 
 
 > sudo ln -s /etc/nginx/sites-available/example.com
 > /etc/nginx/sites-enabled/
 
-4. Make sure na wala kang syntax errors sa conf file mo. Use this command :
+5. Make sure na wala kang syntax errors sa conf file mo. Use this command :
 
 > sudo nginx -t
 
-5. Pag wala namang problems, restart mo na si NGINX:
+6. Pag wala namang problems, restart mo na si NGINX:
 
 > sudo systemctl restart nginx
 
