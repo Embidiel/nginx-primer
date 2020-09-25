@@ -90,8 +90,8 @@ First step type mo tong command na to:
  - **/var/log/nginx/error.log** : Every error na magaganap sa nginx naka record dito.
  - **/var/www/html** : Nandito yung nakita natin kanina na default site ni nginx.
 ## Deployment (Static Website)
-1. Copy mo muna yung static content mo papunta sa server. Maraming ways gawin to tulad ng SCP o kaya pag Git clone ng project mo papunta sa server.
-2. Enable NGINX to have read access sa content / app mo: sudo chmod 755 /home/user/Dropbox/subdir1
+0. Delete mo yung default na landing page ni NGINX. Punta ka sa /etc/nginx/sites-available tapos type mo : `rm default`
+2. Copy mo muna yung static content mo papunta sa server. Maraming ways gawin to tulad ng SCP o kaya pag Git clone ng project mo papunta sa server.
 3. Punta ka sa **/etc/nginx/sites-available** sa server mo, tapos type mo to: 
 	> sudo vim [sitename]; ***Example : sudo vim portfoliosite***
 	
@@ -100,29 +100,55 @@ First step type mo tong command na to:
 ```
   server {
         listen       80;
-        server_name  testinglang.tk www.testinglangmuna.tk;
+        server_name  domainname.com, www.domainname.com;
     location / {
-            root   /home/ubuntu/app/sample-site;
+            root   /var/www/demo [Location ng static content mo sa server mo];
             index  index.html index.htm [Root file na i-seserve ni NGINX];
 			try_files $uri $uri/ =404;
         }
 ```
 
-4. Pag nagawa mo na yung file sa taas, gawa ka ng link papunta sa sites-available to sites-enabled. Gamitin mo tong command sample: 
+3. Pag nagawa mo na yung file sa taas, gawa ka ng link papunta sa sites-available to sites-enabled. Gamitin mo tong command sample: 
 
 > sudo ln -s /etc/nginx/sites-available/example.com
 > /etc/nginx/sites-enabled/
 
-5. Make sure na wala kang syntax errors sa conf file mo. Use this command :
+4. Make sure na wala kang syntax errors sa conf file mo. Use this command :
 
 > sudo nginx -t
 
-6. Pag wala namang problems, restart mo na si NGINX:
+5. Pag wala namang problems, restart mo na si NGINX:
 
 > sudo systemctl restart nginx
 
-## Deployment (Backend)
+6. Buy a domain, prefer ko sa Namecheap.com. 50 pesos may domain ka na.
+
+7. Pag nakabili ka na ng domain name para sa website mo, kunwari sa Namecheap. Punta ka sa  DNS Settings and then set mo yung config katulad ng nasa example.
+
+![enter image description here](https://i.ibb.co/9WtKp1h/50fc1359-a1de-425c-9982-afe224eb18d4.png)
+
+ - **A Record** : Minamap niya yung IPv4 address ng server mo papunta sa domain name.
+ - **CName Record** : Pinopoint niya yung isa pang name (ng server mo kunwari) papunta sa domain name mo. Example pag pumunta ka ng fb.com pinopoint ni fb.com si facebook.com
+
 ## Proxy vs Reverse Proxy
+So ano ba muna ang isang Proxy? Ang proxy basically ginagawa niya is hina-handle niya ang isang request na nanggaling sa client tapos ipapasa niya sa appropriate na receiver or source back and forth.
+
+ - **Forward Proxy**
+ Ginagawa ng isang Forward Proxy is kapag may client or clients na nag send ng request, siya yung sumasalo nito tapos finoforward niya papunta sa isang app server. Sa point of view nung app server di niya alam kung sinong client yung nagpadala ng request.
+
+	Kaya pag nag respond si app server, ipapasa niya yung response niya papunta sa Forward proxy, tapos ang task naman ni Forward proxy is ipasa sa respective client na nagrequest yung response.
+
+![enter image description here](https://www.cloudflare.com/img/learning/cdn/glossary/reverse-proxy/forward-proxy-flow.svg)
+
+ - **Reverse Proxy**
+
+	So sa pangalan palang, kabaligtaran to ni Forward Proxy. Ginagawa naman nito is kapag may request sa isang client o multiple clients, pinapasa niya yung request ng isang client respective na app server tapos tinatanggap niya rin yung response nung app server na yun tapos pinapasa niya papunta sa client.
+
+	Bale si client wala siyang alam kung sinong server yung nagrespond sa kanya. Ang alam niya lang si Reverse Proxy Server yung nagpasa ng response sa kanya.
+
+![enter image description here](https://www.cloudflare.com/img/learning/cdn/glossary/reverse-proxy/reverse-proxy-flow.svg)
+
+## Deployment (Backend)
 ## Load Balancer
 ## Useful Links
 ### Information
@@ -133,4 +159,3 @@ First step type mo tong command na to:
  - **Windows** :  http://nginx.org/en/docs/windows.html
  - **Ubuntu :**  https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04 (Halos kumpleto na rin dito, pati deployment haha)
  - **Deployment Guide EC2** : https://docs.nginx.com/nginx/deployment-guides/amazon-web-services/ec2-instances-for-nginx/
- - **Deployment Guide with Domain Mapping** : https://hackernoon.com/how-to-run-multiple-apps-on-a-single-ec2-instance-with-nginx-and-map-your-custom-domain-2640630ce1e7
