@@ -154,8 +154,10 @@ So ano ba muna ang isang Proxy? Ang proxy basically ginagawa niya is hina-handle
 ### Information
 
  - https://www.aosabook.org/en/nginx.html
+ - https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/
 
 ### Installation
  - **Windows** :  http://nginx.org/en/docs/windows.html
  - **Ubuntu :**  https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04 (Halos kumpleto na rin dito, pati deployment haha)
  - **Deployment Guide EC2** : https://docs.nginx.com/nginx/deployment-guides/amazon-web-services/ec2-instances-for-nginx/
+ 
