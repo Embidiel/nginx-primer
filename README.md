@@ -149,6 +149,36 @@ So ano ba muna ang isang Proxy? Ang proxy basically ginagawa niya is hina-handle
 ![enter image description here](https://www.cloudflare.com/img/learning/cdn/glossary/reverse-proxy/reverse-proxy-flow.svg)
 
 ## Deployment (Backend)
+This time try naman natin mag deploy ng isang NodeJS app.
+
+ 1. Download mo yung sample NodeJS app sa repo.
+ 2. Gamitin mo yung **WinSCP** para makapag transfer ng file papunta sa server. Ilagay mo dito sa directory na to yung project: 
+
+> /home/ubuntu/app
+3.  This time i-aapply natin yung natutunan natin about Reverse Proxy. Mag a-act si **NGINX** as a **Reverse Proxy server**, so lahat ng mapupuntang request dito /, sasaluhin ni NGINX tapos ipapasa niya sa NodeJS app natin. 
+4. Go to NGINX Sites available. Tapos type mo `sudo vim nodeappsample`. Tapos i-paste at gamitin mo tong config file na to para ma setup yung Reverse Proxy.
+
+```
+server {
+
+     listen 80;
+
+      location / {
+
+          proxy_pass "http://127.0.0.1:3000";
+
+       }
+}
+```
+5.  After mo magawa yang file na yan, Gawa ka na ng link papunta sa sites-enabled:
+
+> sudo ln -s /etc/nginx/sites-available/nodeappsample
+> /etc/nginx/sites-enabled/
+
+6.) Next step, gawa ka ulit ng PUTTY SSH session, punta ka sa folder ng node app sample at i-start mo yung node app mo. Type mo `npm run dev`. Lastly restart the NGINX server.
+
+    sudo systemctl restart nginx
+
 ## Load Balancer
 ## Useful Links
 ### Information
